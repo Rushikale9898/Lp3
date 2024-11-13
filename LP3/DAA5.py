@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 def isSafe(board, row, col):
     # Check column for any queen in the same column
     for i in range(row):
@@ -34,41 +28,27 @@ def printBoard(board):
     print()
 
 def placeQueens(board, row):
-    # Base case: All queens are placed
     if row == len(board):
         printBoard(board)
-        return True
+        return True  # Stop after finding the first solution
 
-    # Try placing queen in each column for current row
     for col in range(len(board)):
         if isSafe(board, row, col):
-            # Place queen
             board[row][col] = 'Q'
-
-            # Recur to place the rest of the queens
             if placeQueens(board, row + 1):
-                return True  # Stop after finding the first solution
-
-            # Backtrack if placing queen here doesn't lead to a solution
-            board[row][col] = '.'
+                return True  # Stop recursion once a solution is found
+            board[row][col] = '.'  # Backtrack
 
     return False
 
-def solveNQueens(n):
-    # Initialize board with '.' and place the first queen at top-left corner
-    board = [['.' for _ in range(n)] for _ in range(n)]
-    board[0][0] = 'Q'  # Place the first queen in the top-left
 
-    # Start placing the remaining queens
-    if not placeQueens(board, 1):  # Start from the second row
+def solveNQueens(n):
+    # Initialize board with all empty spaces
+    board = [['.' for _ in range(n)] for _ in range(n)]
+
+    # Start placing queens from the first row
+    if not placeQueens(board, 0):  # Start from the first row
         print("No solution found")
 
-# Example usage for a 4x4 board
+# Example usage for an 8x8 board
 solveNQueens(8)
-
-
-# In[ ]:
-
-
-
-
